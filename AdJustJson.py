@@ -63,5 +63,3 @@ def getKeyBind(option = ''):
         result = json_adj
 
     return result
-
-print(getKeyBind('rename'))
