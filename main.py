@@ -5,7 +5,7 @@ midi入力を取得し、keybind.json に対応してPCのキーボードを制�
 2022 / 9 / 30
 '''
 import pygame.midi as m
-import keyboard
+import pyautogui
 
 ### Midify
 import AdJustJson
@@ -13,6 +13,9 @@ import AdJustJson
 ### midiキーボード
 m.init()
 i = m.Input( m.get_default_input_id() )
+
+# keybind.json を読み込み
+keybind_dict = AdJustJson.getKeyBind()
 
 while True:
     if i.poll(): # MIDIが受信されるとTrue
@@ -26,28 +29,27 @@ while True:
 
             memo
             ---------
+            event[0][0]: ステータス
+                ON | OFF の情報
+
             event[0][1]: ノートナンバー
                 押した時・離した時にそれぞれ一回出現
-
-            event[0][2]: ベロシティ
-                押した時だけ出現
-
             '''
-            # keybind.json を読み込み
-            j = AdJustJson.getKeyBind()
 
-            # ノートナンバーを取得
-            if event[0][1] in j.keys():
-                k = j[ event[0][1] ]
-            else:
-                k = -1
+            status = event[0][0]
+            note = event[0][1]
 
-            # 長押し判定
-            try:
-                if event[0][2] != 0:
-                    keyboard.press(k)
-                else:
-                    keyboard.release(k)
+            # ON
+            if status == 144:
+                # 対応するキーを取得して押す
+                key = keybind_dict.get(note)
+                if key:
+                    pyautogui.keyDown(key)
 
-            except ValueError: # 何も押してない時
-                pass
+            # OFF
+            elif status == 128:
+                # 対応するキーを取得して離す
+                key = keybind_dict.get(note)
+                if key:
+                    pyautogui.keyUp(key)
+                
