@@ -10,6 +10,10 @@ import pyautogui
 ### Midify
 import AdJustJson
 
+### 危険! ###
+# pyautoguiのリミッター解除（入力の高速化）
+pyautogui.PAUSE = 0
+
 ### midiキーボード
 m.init()
 i = m.Input( m.get_default_input_id() )
