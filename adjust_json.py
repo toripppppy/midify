@@ -21,7 +21,6 @@ def get_keybind_dict():
     json_load = json.load(json_open)
 
     ### 整形
-    # json_adj = { MIDI : KEY ... }
     keybind_dict = { json_load[i]['midi'] : json_load[i]['key'] for i in range( len(json_load) ) }
 
     return keybind_dict
