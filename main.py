@@ -18,7 +18,7 @@ pyautogui.PAUSE = 0
 
 
 # keybind.json を読み込み
-keybind_dict = AdJustJson.getKeyBind()
+keybind_dict = AdJustJson.get_keybind_dict()
 
 listener = MIDIListener()
 
