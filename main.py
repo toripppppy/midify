@@ -7,7 +7,7 @@ midi入力を取得し、keybind.json に対応してPCのキーボードを制�
 import pyautogui
 
 ### Midify
-import AdJustJson
+import adjust_json
 
 from midify import MIDIEvent, MIDIListener
 
@@ -17,7 +17,7 @@ pyautogui.PAUSE = 0
 
 
 # keybind.json を読み込み
-keybind_dict = AdJustJson.get_keybind_dict()
+keybind_dict = adjust_json.get_keybind_dict()
 
 listener = MIDIListener()
 
