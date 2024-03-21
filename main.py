@@ -10,50 +10,28 @@ import pyautogui
 ### Midify
 import AdJustJson
 
+from midify import MIDIEvent, MIDIListener
+
 ### 危険! ###
 # pyautoguiのリミッター解除（入力の高速化）
 pyautogui.PAUSE = 0
 
-### midiキーボード
-m.init()
-i = m.Input( m.get_default_input_id() )
 
 # keybind.json を読み込み
 keybind_dict = AdJustJson.getKeyBind()
 
-while True:
-    if i.poll(): # MIDIが受信されるとTrue
+listener = MIDIListener()
 
-        # MIDI入力を取得
-        midi_events = i.read(4)
+@listener.on_keydown
+def keydown(event: MIDIEvent):
+    key = keybind_dict.get(event.note)
+    if key:
+        pyautogui.keyDown(key)
 
-        for event in midi_events:
-            '''
-            keybind.json に対応したキーを制御
+@listener.on_keyup
+def keydown(event: MIDIEvent):
+    key = keybind_dict.get(event.note)
+    if key:
+        pyautogui.keyUp(key)
 
-            memo
-            ---------
-            event[0][0]: ステータス
-                ON | OFF の情報
-
-            event[0][1]: ノートナンバー
-                押した時・離した時にそれぞれ一回出現
-            '''
-
-            status = event[0][0]
-            note = event[0][1]
-
-            # ON
-            if status == 144:
-                # 対応するキーを取得して押す
-                key = keybind_dict.get(note)
-                if key:
-                    pyautogui.keyDown(key)
-
-            # OFF
-            elif status == 128:
-                # 対応するキーを取得して離す
-                key = keybind_dict.get(note)
-                if key:
-                    pyautogui.keyUp(key)
-                
+listener.run()
