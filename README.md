@@ -1,9 +1,10 @@
 # midify
-use your midi keyboard as pc keyboard.  
+Let's use your MIDI Keyboard as PC Keyboard!<br>
 MIDIキーボードをPCのキーボードとして使用できるようになります。
 
 ## 動作環境
-Python3
+Python 3.11.2
+pygame 2.5.2
 
 M1Macのみ動作確認済み。おそらく他OSでも動くはずです・・・
 
@@ -31,6 +32,5 @@ C3 = 60です。
 keyboardモジュールに対応したキーが設定されていないと入力が無視されます。
 
 ## その他
-設定用GUI製作中です  
-今は代用として`printKey.py`を置いてます。  
-実行すると、一番初めに押されたMIDIのノートナンバーを出力します。
+設定するためのノートナンバーの確認用に`printKey.py`をご利用ください。<br>
+実行してキーボードを押すと、MIDIのノートナンバーと音階を出力します。
