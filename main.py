@@ -4,7 +4,6 @@ midi入力を取得し、keybind.json に対応してPCのキーボードを制�
 
 2022 / 9 / 30
 '''
-import pygame.midi as m
 import pyautogui
 
 ### Midify

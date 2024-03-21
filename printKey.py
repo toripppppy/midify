@@ -2,20 +2,12 @@
 midiキーボードの出力確認用
 2022 / 9 / 30
 '''
-import pygame.midi as m
+from midify import MIDIEvent, MIDIListener
 
-### midiキーボードを定義
-m.init()
-i = m.Input( m.get_default_input_id() )
+listener = MIDIListener()
 
-flg  = True
-while flg:
-    if i.poll(): # MIDIが受信されるとTrue
+@listener.on_keydown
+def keydown(event: MIDIEvent):
+    print(event.note, "C|C#|D|D#|E|F|F#|G|G#|A|A#|B".split("|")[event.note % 12] + str((event.note // 12) - 2))
 
-        # MIDI入力を取得
-        midi_events = i.read(4)
-
-        for event in midi_events:
-            if event[0][1] != 0:
-                print(event[0][1])
-                flg = False
+listener.run()
